@@ -1,69 +1,125 @@
-# React + TypeScript + Vite
+# ShowCase - ポートフォリオサイト
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 概要
 
-Currently, two official plugins are available:
+React + TypeScript + Vite + Material-UI (MUI) で構築した写真ギャラリー付きポートフォリオサイトです。
+ダークモード/ライトモード切り替え機能とレスポンシブデザインに対応しています。
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 技術スタック
 
-## Expanding the ESLint configuration
+- **フロントエンド**: React 19.1.0 + TypeScript
+- **ビルドツール**: Vite 7.0.0
+- **UIフレームワーク**: Material-UI (MUI) 7.1.2
+- **ルーティング**: React Router DOM 7.6.2
+- **その他**: 
+  - React Markdown (Markdownレンダリング)
+  - React Masonry CSS (グリッドレイアウト)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 主な機能
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### 🎨 テーマ切り替え
+- ダークモード/ライトモードの切り替え
+- システム設定に基づく自動テーマ検出
+- 全コンポーネントでテーマが統一適用
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+### 📷 ギャラリー機能
+- マソナリーレイアウトによる美しい画像表示
+- 画像・動画両方に対応
+- モーダル表示による拡大表示機能
+- レスポンシブ対応（モバイル・タブレット・デスクトップ）
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### 🛠️ ツール機能
+- Markdownサンドボックス（リアルタイムプレビュー）
+- ソーシャルスタイルテスト
+
+### 📱 レスポンシブデザイン
+- モバイルファーストなデザイン
+- ハンバーガーメニュー（モバイル）
+- 各画面サイズに最適化されたレイアウト
+
+## ディレクトリ構成
+
+```
+src/
+├── components/          # 再利用可能なUIコンポーネント
+│   ├── Header.tsx      # ヘッダーコンポーネント
+│   ├── Footer.tsx      # フッターコンポーネント
+│   ├── Layout.tsx      # レイアウトコンポーネント
+│   └── Navigation.tsx  # ナビゲーションコンポーネント
+├── pages/              # ページコンポーネント
+│   ├── Home.tsx        # ホームページ（ギャラリー）
+│   ├── About.tsx       # 自己紹介ページ
+│   ├── Contact.tsx     # お問い合わせページ
+│   ├── NotFound.tsx    # 404ページ
+│   └── tools/          # ツールページ群
+├── assets/             # 静的ファイル
+│   └── gallery/        # ギャラリー画像
+├── hooks/              # カスタムフック
+├── utils/              # ユーティリティ関数
+├── types/              # 型定義
+├── constants/          # 定数定義
+├── theme.ts           # MUIテーマ設定
+└── AppProvider.tsx    # アプリケーション全体のプロバイダー
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 開発・起動方法
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### 環境要件
+- Node.js 20.19.0以上 または 22.12.0以上
+- npm 10.x以上
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### セットアップ
+
+```bash
+# 依存関係のインストール
+npm install
+
+# 開発サーバーの起動
+npm run dev
+
+# ビルド
+npm run build
+
+# プレビュー（ビルド後）
+npm run preview
+
+# リンター実行
+npm run lint
 ```
+
+## ギャラリー画像の追加方法
+
+1. 画像ファイルを `public/gallery/` フォルダに配置
+2. `src/pages/Home.tsx` の `galleryItems` 配列に画像情報を追加
+
+```typescript
+const galleryItems = [
+  { type: 'image' as const, src: '/gallery/your-image.jpg' },
+  // 他の画像...
+];
+```
+
+## カスタマイズ
+
+### テーマのカスタマイズ
+`src/theme.ts` でライト/ダークテーマの色やスタイルを変更できます。
+
+### 新しいページの追加
+詳細は `docs/how-to-add-page.md` を参照してください。
+
+## デプロイ
+
+詳細は `docs/how-to-deploy.md` を参照してください。
+
+## ドキュメント
+
+- [プロジェクト構造](docs/project-structure.md)
+- [コンポーネント追加方法](docs/how-to-add-component.md)
+- [ページ追加方法](docs/how-to-add-page.md)
+- [デプロイ方法](docs/how-to-deploy.md)
+- [CSSガイド](docs/css-guide.md)
+- [タスク状況](docs/task-status.md)
+
+## ライセンス
+
+このプロジェクトは学習・ポートフォリオ用途で作成されています。
