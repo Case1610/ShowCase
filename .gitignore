@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# Personal information
+src/pages/profile.json
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
